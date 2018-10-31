@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom'
 
 class App extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       isPlaying: false,
       isPaused: true,
       audioCurrentTime: '0',
       currentTrack: null,
-    }
+    };
 
     this.trackListings = [
       'http://www.noiseaddicts.com/samples_1w72b820/50.mp3',
@@ -24,25 +24,23 @@ class App extends React.Component {
       'http://www.noiseaddicts.com/samples_1w72b820/58.mp3',
       'http://www.noiseaddicts.com/samples_1w72b820/59.mp3',
       'http://www.noiseaddicts.com/samples_1w72b820/60.mp3',
-    ]
+    ];
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    nextState.audioCurrentTime !== this.state.audioCurrentTime
+    nextState.audioCurrentTime !== this.state.audioCurrentTime;
   }
 
   componentDidMount() {
-    this.audioPlayer = document.querySelector('.audio-player')
+    this.audioPlayer = document.querySelector('.audio-player');
 
     this.audioPlayer.addEventListener('timeupdate', () => {
-      this.setState({ audioCurrentTime: this.audioPlayer.currentTime })
+      this.setState({ audioCurrentTime: this.audioPlayer.currentTime });
     })
-
-
   }
 
   createTrackListing = () => {
-    const trackListings = []
+    const trackListings = [];
 
     for (let i = 0; i <= this.trackListings.length - 1; i++) {
       trackListings.push(
@@ -50,8 +48,6 @@ class App extends React.Component {
           <li key={"track-"+i}>
             <button
               onClick={() => {
-                console.log(this.trackListings)
-                console.log(i)
                 this.setState({ currentTrack: this.trackListings[i] })
                 this.audioPlayer.src=this.trackListings[i];
               }}
@@ -63,7 +59,7 @@ class App extends React.Component {
       )
     }
 
-    return trackListings
+    return trackListings;
   }
 
   render() {
@@ -104,12 +100,12 @@ class App extends React.Component {
 
           {this.createTrackListing()}
         </div>
-        <audio className="audio-player" src="" controls="true"/>
+        <audio className="audio-player" src="" />
       </div>
     )
   }
 }
 
-const rootElement = document.getElementById('root')
+const rootElement = document.getElementById('root');
 
-ReactDOM.render(<App />, rootElement)
+ReactDOM.render(<App />, rootElement);
