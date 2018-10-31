@@ -7,8 +7,7 @@ class App extends React.Component {
 
     this.state = {
       isPlaying: false,
-      isPaused: true,
-      audioCurrentTime: '0',
+      audioCurrentTime: 0,
       currentTrack: null,
     };
 
@@ -76,8 +75,7 @@ class App extends React.Component {
             this.audioPlayer.play()
             console.info('audio playing')
             this.setState({
-              isPlaying: true,
-              isPaused: false,
+              isPlaying: true
             })
           }}
         >
@@ -88,8 +86,7 @@ class App extends React.Component {
             this.audioPlayer.pause()
             console.info('audio paused')
             this.setState({
-              isPlaying: false,
-              isPaused: true,
+              isPlaying: false
             })
           }}
         >
