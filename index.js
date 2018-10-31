@@ -18,12 +18,17 @@ class App extends React.Component {
       'http://www.noiseaddicts.com/samples_1w72b820/52.mp3',
       'http://www.noiseaddicts.com/samples_1w72b820/53.mp3',
       'http://www.noiseaddicts.com/samples_1w72b820/54.mp3',
+      'http://www.noiseaddicts.com/samples_1w72b820/55.mp3',
+      'http://www.noiseaddicts.com/samples_1w72b820/56.mp3',
+      'http://www.noiseaddicts.com/samples_1w72b820/57.mp3',
+      'http://www.noiseaddicts.com/samples_1w72b820/58.mp3',
+      'http://www.noiseaddicts.com/samples_1w72b820/59.mp3',
+      'http://www.noiseaddicts.com/samples_1w72b820/60.mp3',
     ]
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (nextState.audioCurrentTime === this.state.audioCurrentTime) return true
-    return false
+    nextState.audioCurrentTime !== this.state.audioCurrentTime
   }
 
   componentDidMount() {
@@ -33,29 +38,25 @@ class App extends React.Component {
       this.setState({ audioCurrentTime: this.audioPlayer.currentTime })
     })
 
-    this.trackListings.push([
-      'http://www.noiseaddicts.com/samples_1w72b820/55.mp3',
-      'http://www.noiseaddicts.com/samples_1w72b820/56.mp3',
-      'http://www.noiseaddicts.com/samples_1w72b820/57.mp3',
-      'http://www.noiseaddicts.com/samples_1w72b820/58.mp3',
-      'http://www.noiseaddicts.com/samples_1w72b820/59.mp3',
-      'http://www.noiseaddicts.com/samples_1w72b820/60.mp3',
-    ])
+
   }
 
   createTrackListing = () => {
     const trackListings = []
 
-    for (var i = 0; i <= this.trackListings.length - 1; i++) {
+    for (let i = 0; i <= this.trackListings.length - 1; i++) {
       trackListings.push(
         <ul>
-          <li>
+          <li key={"track-"+i}>
             <button
               onClick={() => {
+                console.log(this.trackListings)
+                console.log(i)
                 this.setState({ currentTrack: this.trackListings[i] })
+                this.audioPlayer.src=this.trackListings[i];
               }}
             >
-              #{(i += 1)}: select track
+              #{(i + 1)}: select track
             </button>
           </li>
         </ul>
@@ -88,7 +89,7 @@ class App extends React.Component {
         </button>
         <button
           onClick={() => {
-            this.audioPlayer.play()
+            this.audioPlayer.pause()
             console.info('audio paused')
             this.setState({
               isPlaying: false,
@@ -103,7 +104,7 @@ class App extends React.Component {
 
           {this.createTrackListing()}
         </div>
-        <audio class="audio-player" src="" />
+        <audio className="audio-player" src="" controls="true"/>
       </div>
     )
   }
