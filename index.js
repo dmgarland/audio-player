@@ -3,14 +3,13 @@ import ReactDOM from 'react-dom'
 
 class App extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       isPlaying: false,
-      isPaused: true,
-      audioCurrentTime: '0',
+      audioCurrentTime: 0,
       currentTrack: null,
-    }
+    };
 
     this.trackListings = [
       'http://www.noiseaddicts.com/samples_1w72b820/50.mp3',
@@ -18,51 +17,48 @@ class App extends React.Component {
       'http://www.noiseaddicts.com/samples_1w72b820/52.mp3',
       'http://www.noiseaddicts.com/samples_1w72b820/53.mp3',
       'http://www.noiseaddicts.com/samples_1w72b820/54.mp3',
-    ]
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (nextState.audioCurrentTime === this.state.audioCurrentTime) return true
-    return false
-  }
-
-  componentDidMount() {
-    this.audioPlayer = document.querySelector('.audio-player')
-
-    this.audioPlayer.addEventListener('timeupdate', () => {
-      this.setState({ audioCurrentTime: this.audioPlayer.currentTime })
-    })
-
-    this.trackListings.push([
       'http://www.noiseaddicts.com/samples_1w72b820/55.mp3',
       'http://www.noiseaddicts.com/samples_1w72b820/56.mp3',
       'http://www.noiseaddicts.com/samples_1w72b820/57.mp3',
       'http://www.noiseaddicts.com/samples_1w72b820/58.mp3',
       'http://www.noiseaddicts.com/samples_1w72b820/59.mp3',
       'http://www.noiseaddicts.com/samples_1w72b820/60.mp3',
-    ])
+    ];
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    nextState.audioCurrentTime !== this.state.audioCurrentTime;
+  }
+
+  componentDidMount() {
+    this.audioPlayer = document.querySelector('.audio-player');
+
+    this.audioPlayer.addEventListener('timeupdate', () => {
+      this.setState({ audioCurrentTime: this.audioPlayer.currentTime });
+    })
   }
 
   createTrackListing = () => {
-    const trackListings = []
+    const trackListings = [];
 
-    for (var i = 0; i <= this.trackListings.length - 1; i++) {
+    for (let i = 0; i <= this.trackListings.length - 1; i++) {
       trackListings.push(
         <ul>
-          <li>
+          <li key={"track-"+i}>
             <button
               onClick={() => {
                 this.setState({ currentTrack: this.trackListings[i] })
+                this.audioPlayer.src=this.trackListings[i];
               }}
             >
-              #{(i += 1)}: select track
+              #{(i + 1)}: select track
             </button>
           </li>
         </ul>
       )
     }
 
-    return trackListings
+    return trackListings;
   }
 
   render() {
@@ -79,8 +75,7 @@ class App extends React.Component {
             this.audioPlayer.play()
             console.info('audio playing')
             this.setState({
-              isPlaying: true,
-              isPaused: false,
+              isPlaying: true
             })
           }}
         >
@@ -88,11 +83,10 @@ class App extends React.Component {
         </button>
         <button
           onClick={() => {
-            this.audioPlayer.play()
+            this.audioPlayer.pause()
             console.info('audio paused')
             this.setState({
-              isPlaying: false,
-              isPaused: true,
+              isPlaying: false
             })
           }}
         >
@@ -103,12 +97,12 @@ class App extends React.Component {
 
           {this.createTrackListing()}
         </div>
-        <audio class="audio-player" src="" />
+        <audio className="audio-player" src="" />
       </div>
     )
   }
 }
 
-const rootElement = document.getElementById('root')
+const rootElement = document.getElementById('root');
 
-ReactDOM.render(<App />, rootElement)
+ReactDOM.render(<App />, rootElement);
